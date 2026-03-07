@@ -40,5 +40,6 @@ Goal: Build an isolated CCNA lab environment that allows internet access while p
 
 Detailed step-by-step documentation is available here:
 
-project-writeups/secure-ccna-lab-integration.md
+[project-writeups/secure-ccna-lab-integration.md
+](https://github.com/cornerstonian/netops-ccna-homelab/blob/main/project-writeups/secure-ccna-lab-integration.md#lab-goals)
 
