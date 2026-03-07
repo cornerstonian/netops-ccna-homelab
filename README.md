@@ -2,6 +2,9 @@
 
 Goal: Build an isolated CCNA lab environment that allows internet access while protecting the primary home network.
 
+![homelab-documentation-photo-](images/ccna-lab-physical-setup-documentation.jpg)
+
+
 ## High-Level Overview
 
 - Cisco 2600 configured as a lab gateway behind a Linksys E2500 buffer router
@@ -42,4 +45,5 @@ Detailed step-by-step documentation is available here:
 
 [project-writeups/secure-ccna-lab-integration.md
 ](https://github.com/cornerstonian/netops-ccna-homelab/blob/main/project-writeups/secure-ccna-lab-integration.md#lab-goals)
+
 
