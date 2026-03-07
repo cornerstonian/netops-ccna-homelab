@@ -1,4 +1,4 @@
-# NetOps CCNA Safety Buffer Lab
+# NetOps CCNA Safety Buffer Homelab (Physical)
 
 Goal: Build an isolated CCNA lab environment that allows internet access while protecting the primary home network.
 
@@ -41,3 +41,4 @@ Goal: Build an isolated CCNA lab environment that allows internet access while p
 Detailed step-by-step documentation is available here:
 
 project-writeups/secure-ccna-lab-integration.md
+
