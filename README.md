@@ -25,19 +25,22 @@ Goal: Build an isolated CCNA lab environment that allows internet access while p
 
 ![Topology](topology-diagrams/netops-lab-topology.png)
 
-## Key Achievements
+### Key Achievements
 
-- Implemented a safety buffer network to isolate CCNA lab traffic
-- Configured DHCP WAN interface on the Cisco router
-- Verified connectivity to the gateway and the internet
-- Prepared router configuration for SSH remote management
+• Implemented a safety buffer network to isolate CCNA lab traffic  
+• Configured Cisco 2600 router connectivity behind a Linksys E2500 buffer router  
+• Converted WAN interface from DHCP to static IP for stable management addressing  
+• Configured default routing to the upstream gateway  
+• Verified Layer 3 connectivity to the buffer router  
+• Implemented Telnet-based remote management via VTY lines  
+• Identified IOS feature limitations preventing SSH configuration
 
-## Next Steps
+### Next Steps
 
-- Generate RSA keys and enable SSH remote access
-- Connect the Catalyst 3500XL switch
-- Configure the internal lab LAN
-- Integrate Raspberry Pi endpoint
+• Upgrade Cisco 2600 IOS image via TFTP to enable crypto/SSH features
+• Connect the Catalyst 3500XL switch
+• Configure the internal lab LAN
+• Integrate Raspberry Pi endpoint for TFTP and automation testing
 
 ## Full Lab Documentation
 
@@ -45,5 +48,6 @@ Detailed step-by-step documentation is available here:
 
 [project-writeups/secure-ccna-lab-integration.md
 ](https://github.com/cornerstonian/netops-ccna-homelab/blob/main/project-writeups/secure-ccna-lab-integration.md#lab-goals)
+
 
 
