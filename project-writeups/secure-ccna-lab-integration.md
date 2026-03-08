@@ -6,8 +6,9 @@ This project establishes a **physical CCNA practice lab** designed to isolate ex
 
 A consumer router (**Linksys E2500**) is used as a **safety buffer** between the upstream home network and the Cisco lab environment. This ensures that configuration errors, routing changes, or future experiments do not disrupt the main household network.
 
-The **Cisco 2600 router** functions as the **lab gateway**, receiving its upstream address via DHCP from the buffer router. The router is also prepared for **secure remote management via SSH**, allowing the console cable to eventually be removed after initial setup.
+The **Cisco 2600 router** functions as the **lab gateway**, initially receiving its upstream address via DHCP from the buffer router. The interface was later converted to a static configuration to ensure stable management addressing.
 
+During remote management configuration it was discovered that the router's IOS image does not support crypto features required for SSH. As a result, Telnet-based remote access was implemented while planning an IOS upgrade to enable SSH in a future phase.
 This lab environment will continue to evolve as additional devices (switches and endpoints) are integrated.
 
 ---
@@ -19,7 +20,7 @@ The objectives of this lab setup are:
 * Create a **safe and isolated networking environment** for CCNA experimentation
 * Prevent lab configurations from impacting the **primary home network**
 * Establish **internet connectivity** for the lab environment
-* Prepare the Cisco router for **secure remote management (SSH)**
+* Implement **remote management access to the router**
 * Lay the groundwork for a **multi-device Cisco lab topology**
 
 ---
@@ -52,7 +53,7 @@ Xfinity Gateway
    ↓
 Linksys E2500 (NAT + DHCP)
    ↓
-Cisco 2600 Router (DHCP Client)
+Cisco 2600 Router (Static WAN Interface)
    ↓
 Console Management from MacBook
 ```
@@ -142,10 +143,10 @@ The Cisco 2600 router serves as the **gateway device for the CCNA lab environmen
 
 It currently performs the following functions:
 
-* DHCP WAN connectivity
+* Static WAN connectivity to the buffer router
 * Traffic routing for the future lab network
-* Preparation for SSH remote management
-
+* Remote management via Telnet (VTY lines)
+  
 ---
 
 ## WAN Interface Configuration
@@ -162,6 +163,15 @@ After configuration, the router received the following address:
 
 ```
 Assigned IP: 192.168.50.131
+Because DHCP assignments can change between reboots, the interface was converted to a static configuration to ensure stable management access.
+
+Updated configuration:
+
+Router# configure terminal
+Router(config)# interface FastEthernet0/1
+Router(config-if)# no ip address dhcp
+Router(config-if)# ip address 192.168.50.10 255.255.255.0
+Router(config-if)# no shutdown
 ```
 
 ---
@@ -237,9 +247,10 @@ This ensures the router retains its configuration after a reboot.
 The lab environment currently provides:
 
 * An **isolated CCNA practice environment**
-* DHCP-based connectivity to the buffer router
+* Static IP connectivity to the buffer router
+* Default routing to the upstream gateway
+* Telnet-based remote management via VTY lines
 * Verified internet reachability
-* Initial SSH configuration preparation
 * Console-based management from the MacBook control station
 
 The **internal LAN and switch infrastructure have not yet been deployed**.
@@ -252,21 +263,35 @@ The next phase of the lab will expand the network topology.
 
 ---
 
+## IOS Upgrade
+The current router IOS image does not support the crypto features required for SSH.
+
+IOS Version:
+Cisco IOS Software (C2600-D-M), Version 12.1(3)T
+
+To enable SSH remote management, the router IOS will be upgraded via TFTP to a **crypto-capable image**.
+
+After upgrading, SSH access will be configured.
+
+---
+
 ## SSH Remote Management
 
-Complete the SSH configuration:
+After the IOS upgrade, secure remote access will be configured using SSH.
+
+Planned configuration:
 
 ```
-crypto key generate rsa
-username admin secret <password>
-
-line vty 0 4
- transport input ssh
- login local
+Router# configure terminal
+Router(config)# ip domain-name ccnahome.lab
+Router(config)# username admin privilege 15 secret <password>
+Router(config)# crypto key generate rsa
+Router(config)# line vty 0 4
+Router(config-line)# transport input ssh
+Router(config-line)# login local
 ```
 
-This will allow secure remote access to the router.
-
+This configuration will allow secure remote management of the router without requiring console access.
 ---
 
 ## Switch Integration
