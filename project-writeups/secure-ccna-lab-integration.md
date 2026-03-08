@@ -117,7 +117,7 @@ This ensures the lab network does not overlap with the upstream **192.168.1.x** 
 Wireless settings were hardened to prevent unauthorized access.
 
 ```
-SSID: CCNA_Lab
+SSID: NetOpsLab
 Encryption: WPA2 Personal (AES)
 ```
 
