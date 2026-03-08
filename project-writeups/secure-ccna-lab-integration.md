@@ -1,4 +1,4 @@
-# Secure CCNA Lab Integration
+## Secure CCNA Lab Integration
 
 ## Project Overview
 
@@ -8,7 +8,7 @@ A consumer router (**Linksys E2500**) is used as a **safety buffer** between the
 
 The **Cisco 2600 router** functions as the **lab gateway**, initially receiving its upstream address via DHCP from the buffer router. The interface was later converted to a static configuration to ensure stable management addressing.
 
-During remote management configuration it was discovered that the router's IOS image does not support crypto features required for SSH. As a result, Telnet-based remote access was implemented while planning an IOS upgrade to enable SSH in a future phase.
+During remote management configuration it was discovered that the router's IOS image does not support crypto features required for . As a result, Telnet-based remote access was implemented while planning an IOS upgrade to enable SSH in a future phase.
 This lab environment will continue to evolve as additional devices (switches and endpoints) are integrated.
 
 ---
@@ -79,7 +79,7 @@ The lab hardware is connected as follows:
 | Connection                                 | Description                                       |
 | ------------------------------------------ | ------------------------------------------------- |
 | Xfinity Gateway → Linksys WAN              | Connects the lab network to the upstream internet |
-| Linksys LAN Port 1 → Cisco FastEthernet0/1 | Provides DHCP address to Cisco router             |
+| Linksys LAN Port 1 → Cisco FastEthernet0/1 | Upstream WAN connection (initially DHCP, later configured static)            |
 | MacBook USB → Cisco Console Port           | Initial router configuration via terminal         |
 
 This structure places the Cisco router **behind the Linksys buffer**, ensuring the lab remains isolated.
@@ -176,26 +176,6 @@ Router(config-if)# no shutdown
 
 ---
 
-## SSH Preparation (In Progress)
-
-The router configuration was prepared for future SSH access.
-
-```
-ip domain-name ccnahome.lab
-```
-
-This setting is required before generating RSA keys for SSH encryption.
-
-Planned configuration:
-
-```
-crypto key generate rsa
-```
-
-SSH will allow the router to be managed remotely without the console cable.
-
----
-
 # Verification and Testing
 
 Connectivity tests were performed to confirm proper network operation.
@@ -247,7 +227,7 @@ This ensures the router retains its configuration after a reboot.
 The lab environment currently provides:
 
 * An **isolated CCNA practice environment**
-* Static IP connectivity to the buffer router
+* Static WAN interface connectivity to the buffer router
 * Default routing to the upstream gateway
 * Telnet-based remote management via VTY lines
 * Verified internet reachability
