@@ -10,7 +10,7 @@
 
 A physical Cisco homelab built for CCNA 200-301 preparation and portfolio development. Every configuration is real — no simulations, no GNS3, no Packet Tracer. The lab environment isolates Cisco equipment behind a Linksys E2500 buffer router to prevent experimental configurations from affecting the upstream home network.
 
-The lab has evolved from a flat single-router setup to a full switched VLAN topology with inter-VLAN routing. The Catalyst 3500XL is now active as the core lab switch, segmenting the network into isolated broadcast domains. A parallel Wireshark traffic analysis series documents every protocol interaction with live packet captures.
+The lab has evolved from a flat single-router setup to a full switched VLAN topology with inter-VLAN routing. The Catalyst 3500XL is now active as the core lab switch, segmenting the network into isolated broadcast domains. A parallel Wireshark traffic analysis series documents every protocol interaction with live packet captures. Network automation via Netmiko is underway — SSH and Telnet access to all three Cisco devices.
 
 ---
 
@@ -72,12 +72,12 @@ Catalyst 3500XL — NetOps-SW1 — 192.168.50.30 (core lab switch)
 | Achievement | Detail |
 |---|---|
 | Lab isolation | Linksys E2500 buffer prevents lab traffic from reaching upstream home network |
-| Static management IP | 2621 Fa0/0 at `192.168.50.10` — converted from DHCP, now subinterface trunk |
+| Static management IP | 2621 Fa0/0 converted from DHCP — now subinterface trunk at 192.168.10.1 / 192.168.20.1 |
 | Internet reachability | Verified through full lab chain — Wi-Fi and lab Ethernet operate simultaneously |
-| Telnet remote access | VTY 0–4 configured on 2621 — Telnet used for cleartext demonstration only |
+| Telnet remote access | VTY 0–4 configured on 2621 — used for cleartext demonstration in Lab 03 |
 | ROMMON password recovery | Unknown `enable secret` recovered — startup-config erased and rebuilt |
 | SSH on Cisco 1700 | RSA 1024-bit keys, `ip ssh version 2`, `transport input ssh`, `login local` |
-| macOS SSH compatibility | `~/.ssh/config` permanent fix for IOS 12.4 legacy algorithm negotiation |
+| macOS SSH compatibility | `~/.ssh/config` permanent fix for IOS 12.4 legacy algorithm negotiation — `ssh 192.168.20.20` |
 | Catalyst 3500XL active | 48-port switch online as core lab switch — IOS 12.0(5)WC3b |
 | VLAN segmentation | VLAN 10 (MANAGEMENT) and VLAN 20 (ROUTERS) — isolated broadcast domains |
 | ISL trunking | Fa0/3 trunk between 3500XL and 2621 — carries VLANs 1, 10, 20 |
@@ -85,16 +85,19 @@ Catalyst 3500XL — NetOps-SW1 — 192.168.50.30 (core lab switch)
 | Inter-VLAN routing proven | MacBook (VLAN 10) → 1700 (VLAN 20) — TTL=254 confirms routed hop |
 | STP active | 3500XL is root bridge — BPDUs every 2 seconds, captured in Wireshark |
 | Wireshark lab series | 5 labs complete — ARP, display filters, TCP/Telnet, SSH, VLANs |
+| Netmiko installed | Python network automation library v4.6.0 — SSH/Telnet access to all three devices |
 
 ---
 
 ## Next Steps
 
+- Configure Telnet on NetOps-SW1 — enable Netmiko automation access to the switch
+- Automation Lab — connect to all three devices, build config backup and compliance scripts
 - Lab 06 — Access Control Lists on 2621 between VLANs — RST and ICMP Admin Prohibited capture
-- Lab 07–11 — DNS, ICMP, TCP, UDP, Statistics — full Wireshark analysis series
-- Lab 12 — Capstone troubleshooting scenario — 4 injected faults, Wireshark-only diagnosis
-- Acquire Raspberry Pi — TFTP server and Linux endpoint for automation labs
-- Build Golden Config Auditor — Netmiko automation project against homelab devices
+- Labs 07–11 — DNS, ICMP, TCP, UDP, Statistics — Wireshark analysis series
+- Lab 12 — Capstone troubleshooting scenario
+- Acquire Raspberry Pi — TFTP server and Linux endpoint
+- Build Golden Config Auditor — Netmiko automation project
 - CCNA exam — May 2026
 
 ---
@@ -102,6 +105,7 @@ Catalyst 3500XL — NetOps-SW1 — 192.168.50.30 (core lab switch)
 ## Repository Structure
 
 ```
+automation/           ← Netmiko scripts — config backup, compliance checking
 configs/              ← router and switch running config backups
 images/               ← lab photos and topology diagrams
 project-writeups/     ← per-project technical documentation
@@ -116,6 +120,7 @@ troubleshooting/      ← standalone issue documentation
 | Document | Description |
 |---|---|
 | [secure-ccna-lab-integration.md](project-writeups/secure-ccna-lab-integration.md) | Full technical writeup — lab build, configs, ROMMON recovery, troubleshooting |
+| [netops-automation-lab.md](project-writeups/netops-automation-lab.md) | Network automation intro — Netmiko, SSH/Telnet, config backup, interface compliance |
 
 ---
 
